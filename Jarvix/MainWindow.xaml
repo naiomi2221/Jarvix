@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="JARVIS" Height="400" Width="400"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent"
-        Topmost="True" WindowStartupLocation="CenterScreen">
+        Topmost="True" WindowStartupLocation="CenterScreen"
+        Visibility="Hidden">
 
     <Window.Resources>
         <Storyboard x:Key="FlowAnimation">
@@ -13,17 +14,27 @@
         </Storyboard>
 
         <Storyboard x:Key="TalkingEffect">
-            <DoubleAnimation Storyboard.TargetName="MainContainerTransform" Storyboard.TargetProperty="X"
-                             From="-2" To="2" Duration="0:0:0.05" AutoReverse="True" RepeatBehavior="Forever" />
+            <DoubleAnimation Storyboard.TargetName="MainContainerScale" Storyboard.TargetProperty="ScaleX"
+                             From="1.0" To="1.05" Duration="0:0:0.8" AutoReverse="True" RepeatBehavior="Forever" />
+            <DoubleAnimation Storyboard.TargetName="MainContainerScale" Storyboard.TargetProperty="ScaleY"
+                             From="1.0" To="1.05" Duration="0:0:0.8" AutoReverse="True" RepeatBehavior="Forever" />
+
             <ColorAnimation Storyboard.TargetName="LineBrush" Storyboard.TargetProperty="Color"
                             To="White" Duration="0:0:0.5" AutoReverse="True" RepeatBehavior="Forever" />
+
+            <DoubleAnimation Storyboard.TargetName="Wave1Scale" Storyboard.TargetProperty="ScaleY"
+                             From="0.2" To="1.2" Duration="0:0:0.15" AutoReverse="True" RepeatBehavior="Forever" />
+            <DoubleAnimation Storyboard.TargetName="Wave2Scale" Storyboard.TargetProperty="ScaleY"
+                             From="0.2" To="1.8" Duration="0:0:0.12" AutoReverse="True" RepeatBehavior="Forever" />
+            <DoubleAnimation Storyboard.TargetName="Wave3Scale" Storyboard.TargetProperty="ScaleY"
+                             From="0.2" To="1.2" Duration="0:0:0.2" AutoReverse="True" RepeatBehavior="Forever" />
         </Storyboard>
     </Window.Resources>
 
     <Grid MouseLeftButtonDown="Window_MouseLeftButtonDown">
         <Canvas Width="300" Height="300" RenderTransformOrigin="0.5,0.5">
             <Canvas.RenderTransform>
-                <TranslateTransform x:Name="MainContainerTransform" X="0" Y="0"/>
+                <ScaleTransform x:Name="MainContainerScale" ScaleX="1" ScaleY="1"/>
             </Canvas.RenderTransform>
 
             <Ellipse Width="200" Height="200" Canvas.Left="50" Canvas.Top="50" Fill="#052233">
@@ -68,12 +79,32 @@
             </Ellipse>
         </Canvas>
 
-        <TextBlock x:Name="StatusText" Text="J.A.R.V.I.S." Foreground="White" 
-                   VerticalAlignment="Center" HorizontalAlignment="Center" 
-                   FontFamily="Segoe UI Light" FontSize="12">
-            <TextBlock.Effect>
-                <DropShadowEffect BlurRadius="5" Color="Cyan" ShadowDepth="0"/>
-            </TextBlock.Effect>
-        </TextBlock>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Height="40" HorizontalAlignment="Center">
+                <Rectangle Width="4" Height="30" Fill="Cyan" Margin="2" RadiusX="2" RadiusY="2" RenderTransformOrigin="0.5,0.5">
+                    <Rectangle.RenderTransform>
+                        <ScaleTransform x:Name="Wave1Scale" ScaleY="0.2"/>
+                    </Rectangle.RenderTransform>
+                </Rectangle>
+                <Rectangle Width="4" Height="50" Fill="Cyan" Margin="2" RadiusX="2" RadiusY="2" RenderTransformOrigin="0.5,0.5">
+                    <Rectangle.RenderTransform>
+                        <ScaleTransform x:Name="Wave2Scale" ScaleY="0.2"/>
+                    </Rectangle.RenderTransform>
+                </Rectangle>
+                <Rectangle Width="4" Height="30" Fill="Cyan" Margin="2" RadiusX="2" RadiusY="2" RenderTransformOrigin="0.5,0.5">
+                    <Rectangle.RenderTransform>
+                        <ScaleTransform x:Name="Wave3Scale" ScaleY="0.2"/>
+                    </Rectangle.RenderTransform>
+                </Rectangle>
+            </StackPanel>
+
+            <TextBlock x:Name="StatusText" Text="J.A.R.V.I.S." Foreground="White" 
+                       HorizontalAlignment="Center" Margin="0,10,0,0"
+                       FontFamily="Segoe UI Light" FontSize="12">
+                <TextBlock.Effect>
+                    <DropShadowEffect BlurRadius="5" Color="Cyan" ShadowDepth="0"/>
+                </TextBlock.Effect>
+            </TextBlock>
+        </StackPanel>
     </Grid>
 </Window>
